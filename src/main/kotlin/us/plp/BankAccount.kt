@@ -1,8 +1,6 @@
 package us.plp
 
 typealias Console = (String) -> Unit
-typealias StatementPrinter = (console: Console, List<Any>) -> Unit
-
 
 class BankAccount(val statementPrinter: StatementPrinter) : Account {
 
@@ -15,7 +13,7 @@ class BankAccount(val statementPrinter: StatementPrinter) : Account {
     }
 
     override fun printStatement() {
-        statementPrinter(println, listOf())
+        statementPrinter.printStatement(listOf())
     }
 
 }
