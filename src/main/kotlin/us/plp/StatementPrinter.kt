@@ -1,7 +1,9 @@
 package us.plp
 
-class StatementPrinter(val println: Console) {
-    fun printStatement(list: List<Any>) {
-        TODO("Not yet implemented")
+typealias Console = (String) -> Unit
+
+val printStatementFactory: (Console) -> StatementPrinter = fun (println: Console): StatementPrinter {
+    return fun (list: List<Any>): Unit {
+        println("DATE       | AMOUNT  | BALANCE")
     }
 }

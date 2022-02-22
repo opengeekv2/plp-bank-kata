@@ -11,14 +11,13 @@ class BankAccountShould {
     @Test
     fun `should print an empty statement for an account with no operations`() {
         //Given
-        val statementPrinter = mockk<StatementPrinter>()
-        justRun { statementPrinter.printStatement(listOf()) }
-        val account: Account = BankAccount(statementPrinter)
+        val printStatement = spyk<StatementPrinter>()
+        val account: Account = BankAccount(printStatement)
 
         //When
         account.printStatement()
 
         //Then
-        verify { statementPrinter.printStatement(listOf()) }
+        verify { printStatement(listOf()) }
     }
 }

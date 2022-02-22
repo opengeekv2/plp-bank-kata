@@ -1,6 +1,10 @@
 Outside-In TDD with Acceptance Tests
 ====================================
 
+### TODO
+
+- [ ] Print header on StatementPrinter
+
 ### Objective
 
 Learn and practice the double loop of TDD
