@@ -1,8 +1,11 @@
 package us.plp
 
-typealias StatementPrinter = (List<Object>) -> Unit
+typealias Console = (String) -> Unit
+typealias StatementPrinter = (console: Console, List<Any>) -> Unit
 
-class BankAccount : Account {
+
+class BankAccount(val statementPrinter: StatementPrinter) : Account {
+
     override fun deposit(amount: Int) {
         TODO("Not yet implemented")
     }
@@ -12,7 +15,7 @@ class BankAccount : Account {
     }
 
     override fun printStatement() {
-        TODO("Not yet implemented")
+        statementPrinter(println, listOf())
     }
 
 }
