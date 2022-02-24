@@ -50,7 +50,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Deposit("2022-02-24", 10000)) }
+        verify { printStatement(listOf(Deposit("2022-02-24", 10000))) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {
