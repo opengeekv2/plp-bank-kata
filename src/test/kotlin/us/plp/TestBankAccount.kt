@@ -16,4 +16,15 @@ class TestBankAccount {
         verify { println("DATE       | AMOUNT  | BALANCE") }
     }
 
+    @Test
+    fun `should print a statement with a deposit after a deposit is done`() {
+        val account: Account = BankAccount(printStatementFactory(println))
+
+        account.deposit(10000)
+
+        account.printStatement()
+
+        verify { println("DATE       | AMOUNT  | BALANCE") }
+    }
+
 }

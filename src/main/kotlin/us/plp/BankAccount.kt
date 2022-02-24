@@ -2,7 +2,9 @@ package us.plp
 
 typealias StatementPrinter = (List<Any>) -> Unit
 
-class BankAccount(val printStatement: StatementPrinter) : Account {
+open class BankAccount(val printStatement: StatementPrinter) : Account {
+
+    var transaction : Int = 0
 
     override fun deposit(amount: Int) {
         TODO("Not yet implemented")
