@@ -4,6 +4,8 @@ import io.mockk.spyk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class BankAccountShould {
 
@@ -20,17 +22,21 @@ class BankAccountShould {
         verify { printStatement(listOf()) }
     }
 
-    @Test
-    fun `should place a deposit`() {
+    @ParameterizedTest
+    @CsvSource(
+        "1",
+        "10000",
+    )
+    fun `should place a deposit`(amountToDeposit: Int) {
         //Given
         val printStatement = spyk<StatementPrinter>()
         val account = BankAccount(printStatement)
 
         //When
-        account.deposit(1)
+        account.deposit(amountToDeposit)
 
         //Then
-        assertThat(account.transaction).isEqualTo(1)
+        assertThat(account.transaction).isEqualTo(amountToDeposit)
     }
 
     fun `should throw an exception when the deposit is less than 1`() {

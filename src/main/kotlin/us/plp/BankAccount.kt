@@ -7,7 +7,7 @@ open class BankAccount(val printStatement: StatementPrinter) : Account {
     var transaction : Int = 0
 
     override fun deposit(amount: Int) {
-        transaction = 1;
+        transaction = amount;
     }
 
     override fun withdrawal(amount: Int) {
