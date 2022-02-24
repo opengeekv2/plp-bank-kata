@@ -24,7 +24,10 @@ class TestBankAccount {
 
         account.printStatement()
 
-        verify { println("DATE       | AMOUNT  | BALANCE") }
+        verify {
+            println("DATE       | AMOUNT  | BALANCE")
+            println("2022-02-24       | 10000  | 10000")
+        }
     }
 
 }

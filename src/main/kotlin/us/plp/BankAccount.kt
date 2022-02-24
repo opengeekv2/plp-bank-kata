@@ -7,7 +7,7 @@ open class BankAccount(val printStatement: StatementPrinter) : Account {
     var transaction : Int = 0
 
     override fun deposit(amount: Int) {
-        TODO("Not yet implemented")
+        transaction = 1;
     }
 
     override fun withdrawal(amount: Int) {
