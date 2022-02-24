@@ -39,6 +39,20 @@ class BankAccountShould {
         assertThat(account.transaction).isEqualTo(amountToDeposit)
     }
 
+    @Test
+    fun `should print the first deposit after the deposit has been done`() {
+        //Given
+        val printStatement = spyk<StatementPrinter>()
+        val account: Account = BankAccount(printStatement)
+
+        //When
+        account.deposit(10000)
+        account.printStatement()
+
+        //Then
+        verify { printStatement(listOf(Deposit: (1)) }
+    }
+
     fun `should throw an exception when the deposit is less than 1`() {
         //Given
         val printStatement = spyk<StatementPrinter>()
