@@ -4,7 +4,14 @@ import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
+const val PRINTER_HEADER: String = "DATE       | AMOUNT  | BALANCE";
+const val SPACING: String = " ";
+
 class PrintStatementShould {
+
+    private fun compareWithOutSpacing(expected: String, actual: String): Boolean {
+        return expected.replace(SPACING, "") == actual.replace(SPACING, "")
+    }
 
     @Test
     fun `should print an empty statement for an account with no operations`() {
@@ -14,7 +21,7 @@ class PrintStatementShould {
         printStatement(listOf())
 
         //Then
-        verify { println("DATE       | AMOUNT  | BALANCE") }
+        verify { println(PRINTER_HEADER) }
     }
 
     @Test
@@ -26,8 +33,8 @@ class PrintStatementShould {
 
         //Then
         verify {
-            println("DATE       | AMOUNT  | BALANCE")
-            println("2022-02-24       | 10000  | 10000")
+            println(PRINTER_HEADER)
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 10000")})
         }
     }
 }
