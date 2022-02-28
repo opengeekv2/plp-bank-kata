@@ -5,19 +5,24 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class BankAccountShould {
 
+    val printStatement = spyk<StatementPrinter>()
+    val today = mockk<Today>()
+    private var account: BankAccount = BankAccount(printStatement, today)
+
+    @BeforeEach
+    fun beforeEach() {
+        account = BankAccount(printStatement, today)
+    }
+
     @Test
     fun `should print an empty statement for an account with no operations`() {
-        //Given
-        val printStatement = spyk<StatementPrinter>()
-        val today = mockk<Today>()
-        val account: Account = BankAccount(printStatement, today)
-
         //When
         account.printStatement()
 
@@ -30,12 +35,10 @@ class BankAccountShould {
         "1",
         "10000",
     )
+
     fun `should place a deposit`(amountToDeposit: Int) {
         //Given
-        val printStatement = spyk<StatementPrinter>()
-        val today = mockk<Today>()
         every { today() } returns "2022-02-24"
-        val account = BankAccount(printStatement, today)
 
         //When
         account.deposit(amountToDeposit)
@@ -51,10 +54,7 @@ class BankAccountShould {
     )
     fun `should print the first deposit after the deposit has been done`(date: String, amountToDeposit: Int) {
         //Given
-        val printStatement = spyk<StatementPrinter>()
-        val today = mockk<Today>()
         every { today() } returns "2022-02-24"
-        val account: Account = BankAccount(printStatement, today)
 
         //When
         account.deposit(amountToDeposit)
@@ -67,11 +67,7 @@ class BankAccountShould {
     @Test
     fun `should print the correct date whenever a deposit is done`() {
         //Given
-        val printStatement = spyk<StatementPrinter>()
-        val today = mockk<Today>()
         every { today() } returns "2022-02-25"
-        val account: Account = BankAccount(printStatement, today)
-
 
         //When
         account.deposit(1)
@@ -83,10 +79,7 @@ class BankAccountShould {
 
     fun `should throw an exception when the deposit is less than 1`() {
         //Given
-        val printStatement = spyk<StatementPrinter>()
-        val today = mockk<Today>()
         every { today() } returns "2022-02-25"
-        val account: Account = BankAccount(printStatement, today)
 
         //When
         account.deposit(0)
