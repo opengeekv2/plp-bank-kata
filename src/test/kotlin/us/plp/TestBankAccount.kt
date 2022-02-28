@@ -19,7 +19,6 @@ class TestBankAccount {
     @Test
     fun `should print a statement with a deposit after a deposit is done`() {
 
-
         val account: Account = BankAccount(printStatementFactory(println), fun (): String {
             return "2022-02-24"
         })
@@ -31,6 +30,25 @@ class TestBankAccount {
         verify {
             println("DATE       | AMOUNT  | BALANCE")
             println("2022-02-24       | 10000  | 10000")
+        }
+    }
+
+    @Test
+    fun `should print many statements with a deposit after many deposits are done`() {
+
+        val account: Account = BankAccount(printStatementFactory(println), fun (): String {
+            return "2022-02-24"
+        })
+
+        account.deposit(10000)
+        account.deposit(10000)
+
+        account.printStatement()
+
+        verify {
+            println("DATE       | AMOUNT  | BALANCE")
+            println("2022-02-24       | 10000  | 10000")
+            println("2022-02-24       | 10000  | 20000")
         }
     }
 
