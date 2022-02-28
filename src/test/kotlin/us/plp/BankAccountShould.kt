@@ -39,18 +39,22 @@ class BankAccountShould {
         assertThat(account.transaction).isEqualTo(amountToDeposit)
     }
 
-    @Test
-    fun `should print the first deposit after the deposit has been done`() {
+    @ParameterizedTest
+    @CsvSource(
+        "2022-02-24, 10000",
+        "2022-02-24, 1",
+    )
+    fun `should print the first deposit after the deposit has been done`(date: String, amountToDeposit: Int) {
         //Given
         val printStatement = spyk<StatementPrinter>()
         val account: Account = BankAccount(printStatement)
 
         //When
-        account.deposit(10000)
+        account.deposit(amountToDeposit)
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Deposit("2022-02-24", 10000))) }
+        verify { printStatement(listOf(Deposit(date, amountToDeposit))) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {

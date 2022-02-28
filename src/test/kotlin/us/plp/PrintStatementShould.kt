@@ -18,7 +18,7 @@ class PrintStatementShould {
     }
 
     @Test
-    fun `should print an simgle statement for an account with some operations`() {
+    fun `should print an single statement for an account with some operations`() {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
