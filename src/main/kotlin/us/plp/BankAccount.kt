@@ -2,14 +2,16 @@ package us.plp
 
 typealias StatementPrinter = (List<Deposit>) -> Unit
 
+typealias Today = () -> String
+
 data class Deposit(val date: String, val amount: Int)
 
-open class BankAccount(val printStatement: StatementPrinter) : Account {
+open class BankAccount(val printStatement: StatementPrinter, val today: Today) : Account {
 
-    var transaction : Int = 0
+    var transaction : MutableList<Deposit> = mutableListOf<Deposit>()
 
     override fun deposit(amount: Int) {
-        transaction = amount;
+        transaction.add(Deposit(today(), amount));
     }
 
     override fun withdrawal(amount: Int) {
@@ -17,7 +19,7 @@ open class BankAccount(val printStatement: StatementPrinter) : Account {
     }
 
     override fun printStatement() {
-        if (transaction > 0) printStatement(listOf(Deposit("2022-02-24", transaction)))
+        if (transaction.size > 0) printStatement(transaction)
         else printStatement(listOf())
     }
 

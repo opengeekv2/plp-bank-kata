@@ -10,7 +10,7 @@ class TestBankAccount {
 
     @Test
     fun `should print an empty statement for an account with no operations`() {
-        val account: Account = BankAccount(printStatementFactory(println))
+        val account: Account = BankAccount(printStatementFactory(println), todayFactory())
         account.printStatement()
 
         verify { println("DATE       | AMOUNT  | BALANCE") }
@@ -18,7 +18,11 @@ class TestBankAccount {
 
     @Test
     fun `should print a statement with a deposit after a deposit is done`() {
-        val account: Account = BankAccount(printStatementFactory(println))
+
+
+        val account: Account = BankAccount(printStatementFactory(println), fun (): String {
+            return "2022-02-24"
+        })
 
         account.deposit(10000)
 
