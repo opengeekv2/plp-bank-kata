@@ -8,12 +8,16 @@ class TestBankAccount {
 
     private val println = spyk<Console>()
 
+    private fun compareWithOutSpacing(expected: String, actual: String): Boolean {
+        return expected.replace(SPACING, "") == actual.replace(SPACING, "")
+    }
+
     @Test
     fun `should print an empty statement for an account with no operations`() {
         val account: Account = BankAccount(printStatementFactory(println), todayFactory())
         account.printStatement()
 
-        verify { println("DATE       | AMOUNT  | BALANCE") }
+        verify { println(PRINTER_HEADER) }
     }
 
     @Test
@@ -28,8 +32,8 @@ class TestBankAccount {
         account.printStatement()
 
         verify {
-            println("DATE       | AMOUNT  | BALANCE")
-            println("2022-02-24       | 10000  | 10000")
+            println(PRINTER_HEADER)
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 10000")})
         }
     }
 
@@ -46,9 +50,9 @@ class TestBankAccount {
         account.printStatement()
 
         verify {
-            println("DATE       | AMOUNT  | BALANCE")
-            println("2022-02-24       | 10000  | 10000")
-            println("2022-02-24       | 10000  | 20000")
+            println(PRINTER_HEADER)
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 10000")})
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 20000")})
         }
     }
 

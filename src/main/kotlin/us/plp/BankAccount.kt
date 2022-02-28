@@ -19,8 +19,7 @@ open class BankAccount(val printStatement: StatementPrinter, val today: Today) :
     }
 
     override fun printStatement() {
-        if (transaction.size > 0) printStatement(transaction)
-        else printStatement(listOf())
+        printStatement(transaction)
     }
 
 }
