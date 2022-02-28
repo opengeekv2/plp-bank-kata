@@ -57,6 +57,20 @@ class BankAccountShould {
         verify { printStatement(listOf(Deposit(date, amountToDeposit))) }
     }
 
+    @Test
+    fun `should print the correct date whenever a deposit is done`() {
+        //Given
+        val printStatement = spyk<StatementPrinter>()
+        val account: Account = BankAccount(printStatement)
+
+        //When
+        account.deposit(1)
+        account.printStatement()
+
+        //Then
+        verify { printStatement(listOf(Deposit("2022-02-25", 1))) }
+    }
+
     fun `should throw an exception when the deposit is less than 1`() {
         //Given
         val printStatement = spyk<StatementPrinter>()
