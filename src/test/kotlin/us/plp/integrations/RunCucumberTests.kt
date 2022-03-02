@@ -7,8 +7,5 @@ import org.junit.runner.RunWith
 
 
 @RunWith(Cucumber::class)
-@CucumberOptions(
-    features = ["src/test/resources/cucumber/features"],
-    tags = "not @ignored"
-)
+@CucumberOptions(plugin = ["pretty"])
 class AppTest
