@@ -44,7 +44,7 @@ task("cucumber") {
             classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
             // Change glue for your project package where the step definitions are.
             // And where the feature files are.
-            args = listOf("--plugin", "pretty", "--glue", "us.plp.feature", "src/test/resources/cucumber/features")
+            args = listOf("--plugin", "pretty", "--glue", "us.plp.integrations", "src/test/resources/cucumber/features")
         }
     }
 }

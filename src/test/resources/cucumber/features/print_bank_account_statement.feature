@@ -1,16 +1,18 @@
-Feature: Print an Account with no transactions
-  A user wants to print an account with no transactions
+Feature: Print an account statement
+  A user wants to print an account statement
+
   Scenario: Print an Account with no transactions
     Given I have an empty account
     When I print the account statement
     Then I see an empty account statement
-    
-  Scenario Outline: Print an Account with no transactions
+
+  Scenario Outline: Print an Account with a deposit
+    Given the date is "<date>"
     Given I have an empty account
     When I do a deposit of "<amount>"
     When I print the account statement
     Then I see an empty account statement
 
   Examples:
-    | amount |
-    | 10000  |
+    | amount | date       |
+    | 10000  | 2022-02-24 |
