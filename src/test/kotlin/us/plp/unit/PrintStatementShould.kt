@@ -1,8 +1,12 @@
-package us.plp
+package us.plp.unit
 
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import us.plp.Console
+import us.plp.Deposit
+import us.plp.StatementPrinter
+import us.plp.printStatementFactory
 
 const val PRINTER_HEADER: String = "DATE       | AMOUNT  | BALANCE";
 const val SPACING: String = " ";

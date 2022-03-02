@@ -1,4 +1,4 @@
-package us.plp
+package us.plp.unit
 
 import io.mockk.every
 import io.mockk.mockk
@@ -9,6 +9,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import us.plp.BankAccount
+import us.plp.Deposit
+import us.plp.StatementPrinter
+import us.plp.Today
 
 class BankAccountShould {
 

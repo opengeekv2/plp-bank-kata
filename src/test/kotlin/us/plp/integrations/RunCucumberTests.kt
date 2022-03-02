@@ -1,4 +1,4 @@
-package us.plp
+package us.plp.integrations
 
 
 import io.cucumber.junit.Cucumber

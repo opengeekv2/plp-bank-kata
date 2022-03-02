@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val cucumberRuntime: Configuration by configurations.creating {
+    extendsFrom(configurations["testImplementation"])
+}
+
 plugins {
     kotlin("jvm") version "1.6.10"
     application
@@ -30,6 +34,19 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+}
+
+task("cucumber") {
+    dependsOn("assemble", "compileTestJava")
+    doLast {
+        javaexec {
+            mainClass.set("io.cucumber.core.cli.Main")
+            classpath = cucumberRuntime + sourceSets.main.get().output + sourceSets.test.get().output
+            // Change glue for your project package where the step definitions are.
+            // And where the feature files are.
+            args = listOf("--plugin", "pretty", "--glue", "com.example.feature", "src/test/resources")
+        }
+    }
 }
 
 application {

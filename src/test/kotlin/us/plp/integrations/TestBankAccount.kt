@@ -1,8 +1,11 @@
-package us.plp
+package us.plp.integrations
 
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import us.plp.*
+import us.plp.unit.PRINTER_HEADER
+import us.plp.unit.SPACING
 
 class TestBankAccount {
 
