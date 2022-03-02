@@ -13,16 +13,19 @@ repositories {
 }
 
 dependencies {
+    implementation("io.cucumber:cucumber-java:7.2.3")
+    implementation("io.cucumber:cucumber-junit:7.2.3")
     testImplementation("org.assertj:assertj-core:3.22.0")
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.12.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
-
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.2.3")
 }
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }
 
 tasks.withType<KotlinCompile> {
