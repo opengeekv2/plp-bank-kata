@@ -11,7 +11,7 @@ Feature: Print an account statement
     Given I have an empty account
     When I do a deposit of "<amount>"
     When I print the account statement
-    Then I see an empty account statement
+    Then I see an account statement for "<date>" with a deposit of "<amount>" and a balance of "<amount>"
 
   Examples:
     | amount | date       |
