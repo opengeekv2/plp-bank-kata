@@ -17,16 +17,14 @@ Feature: Print an account statement
     | amount | date       | balance |
     | 10000  | 2022-02-24 | 10000   |
 
-  Scenario Outline: Print an Account with two deposits
-    Given the date is "<date>"
-    Given I have an empty account
-    When I do a deposit of "<amount>"
-    When I print the account statement
+  Scenario: Print an Account with two deposits
+    Given the date is "2022-02-24"
+    And I have an empty account
+    When I do a deposit of "10000"
+    And the date is "2022-02-25"
+    And I do a deposit of "20000"
+    And I print the account statement
     Then I see the header for the account statement
-    Then I see an account statement for "<date>" with a deposit of "<amount>" and a balance of "<balance>"
-    Then I see an account statement for "<date>" with a deposit of "<amount>" and a balance of "<balance>"
+    And I see an account statement for "2022-02-24" with a deposit of "10000" and a balance of "10000"
+    And I see an account statement for "2022-02-25" with a deposit of "20000" and a balance of "30000"
 
-  Examples:
-    | amount | date       | balance |
-    | 10000  | 2022-02-24 | 10000   |
-    | 20000  | 2022-02-25 | 30000   |

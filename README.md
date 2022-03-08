@@ -3,7 +3,10 @@ Outside-In TDD with Acceptance Tests
 
 ### TODO
 
-- [ ] Print header on StatementPrinter
+- [X] Print header on StatementPrinter
+- [ ] Implement withdraw -> transaction concept
+- [ ] Transaction repository
+  - [ ] Migrate the responsibility to keep balances on Transaction repository
 
 ### Objective
 

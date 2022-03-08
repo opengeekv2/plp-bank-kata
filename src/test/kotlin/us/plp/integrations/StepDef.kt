@@ -14,20 +14,21 @@ class StepDef {
     }
     private val println = spyk<Console>()
     private var account: Account? = null
-    private var todayFactory: () -> Today = us.plp.todayFactory
+    private var today: String? = null
 
     @Given("the date is {string}")
     fun the_date_is(string: String) {
-        todayFactory = fun (): Today {
-            return fun (): String {
-                return "2022-02-24"
-            }
-        }
+        today = string
     }
 
     @Given("I have an empty account")
     fun i_have_an_empty_account() {
-        account = BankAccount(printStatementFactory(println), todayFactory())
+        // The mocking framework forces us to set up a value for all calls of the same function
+        // We don't want to make the function mutable as the implementation does not need it
+        val funToday: Today = fun (): String {
+            return today!!
+        }
+        account = BankAccount(printStatementFactory(println), funToday)
     }
 
     @When("I do a deposit of {string}")
@@ -41,6 +42,7 @@ class StepDef {
         account?.printStatement()
     }
 
+    @Then("I see the header for the account statement")
     @Then("I see an empty account statement")
     fun i_see_an_empty_account_statement() {
         verify { println(PRINTER_HEADER) }
@@ -53,7 +55,6 @@ class StepDef {
         balance: String
     ) {
         verify {
-            println(PRINTER_HEADER)
             println(match { param -> compareWithOutSpacing(param, "$date | $amount | $balance")})
         }
     }
