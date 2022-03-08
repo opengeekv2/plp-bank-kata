@@ -21,7 +21,7 @@ Feature: Print an account statement
     Given the date is "2022-02-24"
     And I have an empty account
     When I do a deposit of "10000"
-    And the date is "2022-02-25"
+    And the date becomes "2022-02-25"
     And I do a deposit of "20000"
     And I print the account statement
     Then I see the header for the account statement

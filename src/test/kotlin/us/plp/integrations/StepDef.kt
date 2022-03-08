@@ -2,8 +2,7 @@ package us.plp.integrations
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import io.mockk.spyk
-import io.mockk.verify
+import io.mockk.*
 import us.plp.*
 import us.plp.unit.PRINTER_HEADER
 import us.plp.unit.SPACING
@@ -13,33 +12,28 @@ class StepDef {
         return expected.replace(SPACING, "") == actual.replace(SPACING, "")
     }
     private val println = spyk<Console>()
+    private val today: Today = mockk<Today>()
     private var account: Account? = null
-    private var today: String? = null
 
     @Given("the date is {string}")
+    @When("the date becomes {string}")
     fun the_date_is(string: String) {
-        today = string
+        every { today() } returns string
     }
 
     @Given("I have an empty account")
     fun i_have_an_empty_account() {
-        // The mocking framework forces us to set up a value for all calls of the same function
-        // We don't want to make the function mutable as the implementation does not need it
-        val funToday: Today = fun (): String {
-            return today!!
-        }
-        account = BankAccount(printStatementFactory(println), funToday)
+        account = BankAccount(printStatementFactory(println), today)
     }
 
     @When("I do a deposit of {string}")
     fun i_do_a_deposit_of(amount: String) {
-        // Write code here that turns the phrase above into concrete actions
-        account?.deposit(amount.toInt())
+        account!!.deposit(amount.toInt())
     }
 
     @When("I print the account statement")
     fun i_print_the_account_statement() {
-        account?.printStatement()
+        account!!.printStatement()
     }
 
     @Then("I see the header for the account statement")
