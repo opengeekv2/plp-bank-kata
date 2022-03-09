@@ -4,11 +4,14 @@ typealias StatementPrinter = (List<Deposit>) -> Unit
 
 typealias Today = () -> String
 
-data class Deposit(val date: String, val amount: Int)
+data class Deposit(override val date: String, override val amount: Int): Transaction(date, amount);
+data class Withdrawal(override val date: String, override val amount: Int): Transaction(date, amount);
+
+abstract class Transaction(open val date: String, open val amount: Int)
 
 open class BankAccount(val printStatement: StatementPrinter, val today: Today) : Account {
 
-    var transaction : MutableList<Deposit> = mutableListOf<Deposit>()
+    var transaction : MutableList<Transaction> = mutableListOf<Transaction>()
 
     override fun deposit(amount: Int) {
         transaction.add(Deposit(today(), amount));

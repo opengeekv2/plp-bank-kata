@@ -81,6 +81,19 @@ class BankAccountShould {
         verify { printStatement(listOf(Deposit("2022-02-25", 1))) }
     }
 
+    @Test
+    fun `should be able to withdrawal an amount from an account`() {
+        //Given
+        every { today() } returns "2022-02-25"
+
+        //When
+        account.withdrawal(1)
+        account.printStatement()
+
+        //Then
+        verify { printStatement(listOf(Deposit("2022-02-25", -1))) }
+    }
+
     fun `should throw an exception when the deposit is less than 1`() {
         //Given
         every { today() } returns "2022-02-25"
