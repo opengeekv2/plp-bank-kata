@@ -28,3 +28,13 @@ Feature: Print an account statement
     And I see an account statement for "2022-02-24" with a deposit of "10000" and a balance of "10000"
     And I see an account statement for "2022-02-25" with a deposit of "20000" and a balance of "30000"
 
+  Scenario Outline: Print a Account with a withdrawal
+    Given the date is "<date>"
+    Given I have an empty account
+    When I do a withdrawal of "<amount>"
+    When I print the account statement
+    Then I see an account statement for "<date>" with a deposit of "<amount>" and a balance of "<balance>"
+
+    Examples:
+      | amount | date       | balance |
+      | 500    | 2022-02-24 | -500    |

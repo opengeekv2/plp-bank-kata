@@ -2,7 +2,10 @@ package us.plp.integrations
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import us.plp.*
 import us.plp.unit.PRINTER_HEADER
 import us.plp.unit.SPACING
@@ -34,6 +37,11 @@ class StepDef {
     @When("I print the account statement")
     fun i_print_the_account_statement() {
         account!!.printStatement()
+    }
+
+    @When("I do a withdrawal of {string}")
+    fun i_do_a_withdrawal_of(string: String?) {
+        account!!.withdrawal(500);
     }
 
     @Then("I see the header for the account statement")
