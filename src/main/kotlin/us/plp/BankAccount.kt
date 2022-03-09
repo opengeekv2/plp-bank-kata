@@ -1,6 +1,6 @@
 package us.plp
 
-typealias StatementPrinter = (List<Deposit>) -> Unit
+typealias StatementPrinter = (List<Transaction>) -> Unit
 
 typealias Today = () -> String
 
