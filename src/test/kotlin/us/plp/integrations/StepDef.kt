@@ -40,8 +40,8 @@ class StepDef {
     }
 
     @When("I do a withdrawal of {string}")
-    fun i_do_a_withdrawal_of(string: String?) {
-        account!!.withdrawal(500);
+    fun i_do_a_withdrawal_of(amount: String) {
+        account!!.withdrawal(amount.toInt());
     }
 
     @Then("I see the header for the account statement")
@@ -51,6 +51,7 @@ class StepDef {
     }
 
     @Then("I see an account statement for {string} with a deposit of {string} and a balance of {string}")
+    @Then("I see an account statement for {string} with a withdrawal of {string} and a balance of {string}")
     fun i_see_an_account_statement_for_with_a_deposit_of_and_a_balance_of(
         date: String,
         amount: String,

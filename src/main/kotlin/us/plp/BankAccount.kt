@@ -4,10 +4,21 @@ typealias StatementPrinter = (List<Transaction>) -> Unit
 
 typealias Today = () -> String
 
-data class Deposit(override val date: String, override val amount: Int): Transaction(date, amount);
-data class Withdrawal(override val date: String, override val amount: Int): Transaction(date, amount);
+data class Deposit(override val date: String, override val amount: Int): Transaction(date, amount) {
+    override fun applyTransaction(balance: Int): Int {
+        TODO("To be implemented")
+    }
+}
 
-abstract class Transaction(open val date: String, open val amount: Int)
+data class Withdrawal(override val date: String, override val amount: Int): Transaction(date, amount) {
+    override fun applyTransaction(balance: Int): Int {
+        TODO("To be implemented")
+    }
+}
+
+abstract class Transaction(open val date: String, open val amount: Int) {
+    abstract fun applyTransaction(balance: Int): Int
+}
 
 open class BankAccount(val printStatement: StatementPrinter, val today: Today) : Account {
 
@@ -18,7 +29,7 @@ open class BankAccount(val printStatement: StatementPrinter, val today: Today) :
     }
 
     override fun withdrawal(amount: Int) {
-
+        transaction.add(Withdrawal(today(), amount))
     }
 
     override fun printStatement() {

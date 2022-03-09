@@ -4,8 +4,11 @@ Outside-In TDD with Acceptance Tests
 ### TODO
 
 - [X] Print header on StatementPrinter
-- [ ] Implement withdraw -> transaction concept
-- [ ] Transaction repository
+- [X] Implement withdraw -> transaction concept
+- [ ] Test PrintStatement with Deposit and Withdraw mocks
+- [ ] Test Bank Account with Deposit and Withdraw mocks
+- [ ] Test applyTransaction in Deposit and Withdraw
+- [ ] Transaction repository (obtains dates form calendar)
   - [ ] Migrate the responsibility to keep balances on Transaction repository
 
 ### Objective
