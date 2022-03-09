@@ -9,10 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import us.plp.BankAccount
-import us.plp.Deposit
-import us.plp.StatementPrinter
-import us.plp.Today
+import us.plp.*
 
 class BankAccountShould {
 
@@ -91,7 +88,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Deposit("2022-02-25", -1))) }
+        verify { printStatement(listOf(Withdrawal("2022-02-25", 1))) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {
