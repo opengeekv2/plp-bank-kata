@@ -1,0 +1,18 @@
+version: '3.1'
+volumes:
+  home:
+services:
+  plp-bank-kata:
+    user: "${UID}"
+    build:
+      context: ./docker
+    volumes:
+      - ".:/app"
+      - "home:/home"
+    environment:
+      GRADLE_HOME_DIR: "/home/gradle"
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 2G
