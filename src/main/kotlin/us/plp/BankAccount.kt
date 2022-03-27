@@ -6,7 +6,7 @@ typealias Today = () -> String
 
 data class Deposit(override val date: String, override val amount: Int): Transaction(date, amount) {
     override fun applyTransaction(balance: Int): Int {
-        TODO("To be implemented")
+        return balance + amount
     }
 }
 
