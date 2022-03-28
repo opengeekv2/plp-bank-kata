@@ -24,7 +24,7 @@ abstract class Transaction(open val date: String, open val amount: Int) {
 
 interface TransactionRepository {
     fun add(transaction: Transaction)
-    fun forEach(transactionConsumer: (Transaction) -> Unit)
+    fun forEach(transactionConsumer: (Transaction, Int) -> Unit)
 }
 
 class BankAccount(

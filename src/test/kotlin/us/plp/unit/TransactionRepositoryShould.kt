@@ -40,8 +40,9 @@ class TransactionRepositoryShould {
         val deposit = Deposit("23/03/2022", 100)
         val withdrawal = Withdrawal("24/03/2022", 200)
         val transactionRepository = InMemoryTransactionRepository(mutableListOf(deposit, withdrawal))
-        transactionRepository.forEach {
-            assertThat(it).isIn(listOf(deposit, withdrawal))
-        }
+        transactionRepository.forEach(fun (transaction: Transaction, balance: Int) {
+            assertThat(transaction).isIn(listOf(deposit, withdrawal))
+            assertThat(balance).isIn(listOf(100, -100))
+        })
     }
 }
