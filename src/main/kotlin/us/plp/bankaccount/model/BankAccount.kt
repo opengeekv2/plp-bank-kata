@@ -1,6 +1,6 @@
 package us.plp
 
-import us.plp.infrastructure.InMemoryTransactionRepository
+import us.plp.bankaccount.model.Account
 
 typealias StatementPrinter = (TransactionRepository) -> Unit
 

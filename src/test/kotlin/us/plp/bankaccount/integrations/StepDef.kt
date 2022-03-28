@@ -1,4 +1,4 @@
-package us.plp.integrations
+package us.plp.bankaccount.integrations
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -7,11 +7,12 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import us.plp.*
-import us.plp.infrastructure.Console
-import us.plp.infrastructure.InMemoryTransactionRepository
-import us.plp.infrastructure.printStatementFactory
-import us.plp.unit.PRINTER_HEADER
-import us.plp.unit.SPACING
+import us.plp.bankaccount.infrastructure.Console
+import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
+import us.plp.bankaccount.infrastructure.printStatementFactory
+import us.plp.bankaccount.model.Account
+import us.plp.bankaccount.unit.PRINTER_HEADER
+import us.plp.bankaccount.unit.SPACING
 
 class StepDef {
     private fun compareWithOutSpacing(expected: String, actual: String): Boolean {

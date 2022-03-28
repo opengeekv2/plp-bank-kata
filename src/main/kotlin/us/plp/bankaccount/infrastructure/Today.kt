@@ -1,4 +1,4 @@
-package us.plp.infrastructure
+package us.plp.bankaccount.infrastructure
 
 import us.plp.Today
 

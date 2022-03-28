@@ -1,15 +1,16 @@
-package us.plp.integrations
+package us.plp.bankaccount.integrations
 
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import us.plp.*
-import us.plp.infrastructure.Console
-import us.plp.infrastructure.InMemoryTransactionRepository
-import us.plp.infrastructure.printStatementFactory
-import us.plp.infrastructure.todayFactory
-import us.plp.unit.PRINTER_HEADER
-import us.plp.unit.SPACING
+import us.plp.bankaccount.infrastructure.Console
+import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
+import us.plp.bankaccount.infrastructure.printStatementFactory
+import us.plp.bankaccount.infrastructure.todayFactory
+import us.plp.bankaccount.model.Account
+import us.plp.bankaccount.unit.PRINTER_HEADER
+import us.plp.bankaccount.unit.SPACING
 
 class TestBankAccount {
 

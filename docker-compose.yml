@@ -3,7 +3,7 @@ volumes:
   home:
 services:
   plp-bank-kata:
-    entrypoint: "gradle cucumber"
+    entrypoint: "gradle test"
     user: "${UID}"
     build:
       context: ./docker

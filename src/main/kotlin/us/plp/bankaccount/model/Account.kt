@@ -1,4 +1,4 @@
-package us.plp
+package us.plp.bankaccount.model
 
 interface Account {
     fun deposit(amount: Int): Unit

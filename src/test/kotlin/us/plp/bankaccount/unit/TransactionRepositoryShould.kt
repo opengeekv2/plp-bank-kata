@@ -1,10 +1,10 @@
-package us.plp.unit
+package us.plp.bankaccount.unit
 
 import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import us.plp.*
-import us.plp.infrastructure.InMemoryTransactionRepository
+import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
 
 class TransactionRepositoryShould {
 
