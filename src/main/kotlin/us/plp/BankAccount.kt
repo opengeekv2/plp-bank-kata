@@ -31,8 +31,6 @@ class BankAccount(
     val transactionRepository: TransactionRepository,
     val printStatement: StatementPrinter, val today: Today) : Account {
 
-    //var transaction : MutableList<Transaction> = mutableListOf<Transaction>()
-
     override fun deposit(amount: Int) {
         transactionRepository.add(Deposit(today(), amount));
     }

@@ -15,4 +15,13 @@ class TransactionRepositoryShould {
         transactionRepository.add(deposit)
         assertThat(transactionRepository.getAll()).isEqualTo(listOf(deposit))
     }
+
+    @Test
+    fun `add a withdrawal`(
+    ) {
+        val withdrawal = Withdrawal("24/03/2022", 200)
+        val transactionRepository = InMemoryTransactionRepository()
+        transactionRepository.add(withdrawal)
+        assertThat(transactionRepository.getAll()).isEqualTo(listOf(withdrawal))
+    }
 }

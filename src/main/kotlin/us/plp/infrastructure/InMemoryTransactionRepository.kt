@@ -1,13 +1,17 @@
 package us.plp.infrastructure
 
+import us.plp.Deposit
 import us.plp.Transaction
 import us.plp.TransactionRepository
 
 class InMemoryTransactionRepository : TransactionRepository {
+
+    private val transactions = mutableListOf<Transaction>()
+
     override fun add(transaction: Transaction) {
-        TODO("Yet to be implemented")
+        transactions.add(transaction)
     }
     override fun getAll(): List<Transaction> {
-        TODO("Yet to be implemented")
+        return transactions
     }
 }
