@@ -10,9 +10,9 @@ class InMemoryTransactionRepository(val transactions: MutableList<Transaction> =
 
     override fun forEach(transactionConsumer: (Transaction, Int) -> Unit) {
         var balance = 0
-        transactions.forEach(fun (transaction: Transaction) {
-            balance = transaction.applyTransaction(balance)
-            transactionConsumer(transaction, balance)
-        })
+        transactions.forEach {
+            balance = it.applyTransaction(balance)
+            transactionConsumer(it, balance)
+        }
     }
 }
