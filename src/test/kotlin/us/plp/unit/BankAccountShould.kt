@@ -13,13 +13,14 @@ import us.plp.*
 
 class BankAccountShould {
 
-    val printStatement = spyk<StatementPrinter>()
-    val today = mockk<Today>()
-    private var account: BankAccount = BankAccount(printStatement, today)
+    private val transactionRepository = mockk<TransactionRepository>()
+    private val printStatement = spyk<StatementPrinter>()
+    private val today = mockk<Today>()
+    private var account: BankAccount = BankAccount(transactionRepository, printStatement, today)
 
     @BeforeEach
     fun beforeEach() {
-        account = BankAccount(printStatement, today)
+        account = BankAccount(transactionRepository, printStatement, today)
     }
 
     @Test
@@ -28,7 +29,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf()) }
+        verify { printStatement(transactionRepository) }
     }
 
     @ParameterizedTest
@@ -45,7 +46,7 @@ class BankAccountShould {
         account.deposit(amountToDeposit)
 
         //Then
-        assertThat(account.transaction[0].amount).isEqualTo(amountToDeposit)
+        verify { transactionRepository.add(Deposit("2022-02-24", amountToDeposit)) }
     }
 
     @ParameterizedTest
@@ -62,7 +63,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Deposit(date, amountToDeposit))) }
+        verify { printStatement(transactionRepository) }
     }
 
     @Test
@@ -75,7 +76,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Deposit("2022-02-25", 1))) }
+        verify { printStatement(transactionRepository) }
     }
 
     @Test
@@ -88,7 +89,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(listOf(Withdrawal("2022-02-25", 1))) }
+        verify { printStatement(transactionRepository) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {
@@ -99,6 +100,6 @@ class BankAccountShould {
         account.deposit(0)
 
         //Then
-        verify { printStatement(listOf()) }
+        verify { printStatement(transactionRepository) }
     }
 }

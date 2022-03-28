@@ -4,6 +4,10 @@ import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import us.plp.*
+import us.plp.infrastructure.Console
+import us.plp.infrastructure.InMemoryTransactionRepository
+import us.plp.infrastructure.printStatementFactory
+import us.plp.infrastructure.todayFactory
 import us.plp.unit.PRINTER_HEADER
 import us.plp.unit.SPACING
 
@@ -17,7 +21,11 @@ class TestBankAccount {
 
     @Test
     fun `should print an empty statement for an account with no operations`() {
-        val account: Account = BankAccount(printStatementFactory(println), todayFactory())
+        val account: Account = BankAccount(
+            InMemoryTransactionRepository(),
+            printStatementFactory(println),
+            todayFactory()
+        )
         account.printStatement()
 
         verify { println(PRINTER_HEADER) }
@@ -26,9 +34,12 @@ class TestBankAccount {
     @Test
     fun `should print a statement with a deposit after a deposit is done`() {
 
-        val account: Account = BankAccount(printStatementFactory(println), fun (): String {
-            return "2022-02-24"
-        })
+        val account: Account = BankAccount(
+            InMemoryTransactionRepository(),
+            printStatementFactory(println),
+            fun (): String {
+                return "2022-02-24"
+            })
 
         account.deposit(10000)
 
@@ -43,9 +54,12 @@ class TestBankAccount {
     @Test
     fun `should print many statements with a deposit after many deposits are done`() {
 
-        val account: Account = BankAccount(printStatementFactory(println), fun (): String {
-            return "2022-02-24"
-        })
+        val account: Account = BankAccount(
+            InMemoryTransactionRepository(),
+            printStatementFactory(println),
+            fun (): String {
+                return "2022-02-24"
+            })
 
         account.deposit(10000)
         account.deposit(10000)

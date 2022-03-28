@@ -3,10 +3,11 @@ package us.plp.unit
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import us.plp.Console
 import us.plp.Deposit
 import us.plp.StatementPrinter
-import us.plp.printStatementFactory
+import us.plp.infrastructure.Console
+import us.plp.infrastructure.InMemoryTransactionRepository
+import us.plp.infrastructure.printStatementFactory
 
 const val PRINTER_HEADER: String = "DATE       | AMOUNT  | BALANCE";
 const val SPACING: String = " ";
@@ -22,7 +23,7 @@ class PrintStatementShould {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
-        printStatement(listOf())
+        printStatement(InMemoryTransactionRepository())
 
         //Then
         verify { println(PRINTER_HEADER) }
@@ -33,7 +34,9 @@ class PrintStatementShould {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
-        printStatement(listOf(Deposit("2022-02-24", 10000)))
+        val transactionRepository = InMemoryTransactionRepository()
+        transactionRepository.add(Deposit("2022-02-24", 10000))
+        printStatement(transactionRepository)
 
         //Then
         verify {
