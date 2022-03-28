@@ -24,4 +24,17 @@ class TransactionRepositoryShould {
         transactionRepository.add(withdrawal)
         assertThat(transactionRepository.getAll()).isEqualTo(listOf(withdrawal))
     }
+
+    @Test
+    fun `forEach runs forEach on all transactions`(
+    ) {
+        val deposit = Deposit("23/03/2022", 100)
+        val withdrawal = Withdrawal("24/03/2022", 200)
+        val transactionRepository = InMemoryTransactionRepository()
+        transactionRepository.add(deposit)
+        transactionRepository.add(withdrawal)
+        transactionRepository.forEach {
+            assertThat(it).isIn(listOf(deposit, withdrawal))
+        }
+    }
 }

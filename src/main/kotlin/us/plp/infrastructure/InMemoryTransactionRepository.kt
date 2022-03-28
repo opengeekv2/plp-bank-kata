@@ -1,6 +1,4 @@
 package us.plp.infrastructure
-
-import us.plp.Deposit
 import us.plp.Transaction
 import us.plp.TransactionRepository
 
@@ -11,7 +9,12 @@ class InMemoryTransactionRepository : TransactionRepository {
     override fun add(transaction: Transaction) {
         transactions.add(transaction)
     }
+
     override fun getAll(): List<Transaction> {
         return transactions
+    }
+
+    override fun forEach(transactionConsumer: (Transaction) -> Unit) {
+        transactions.forEach(transactionConsumer)
     }
 }
