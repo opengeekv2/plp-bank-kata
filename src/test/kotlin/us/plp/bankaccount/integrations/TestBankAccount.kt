@@ -5,7 +5,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import us.plp.*
 import us.plp.bankaccount.infrastructure.Console
-import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
 import us.plp.bankaccount.infrastructure.printStatementFactory
 import us.plp.bankaccount.infrastructure.todayFactory
 import us.plp.bankaccount.model.Account
@@ -23,7 +22,7 @@ class TestBankAccount {
     @Test
     fun `should print an empty statement for an account with no operations`() {
         val account: Account = BankAccount(
-            InMemoryTransactionRepository(),
+            Transactions(),
             printStatementFactory(println),
             todayFactory()
         )
@@ -36,7 +35,7 @@ class TestBankAccount {
     fun `should print a statement with a deposit after a deposit is done`() {
 
         val account: Account = BankAccount(
-            InMemoryTransactionRepository(),
+            Transactions(),
             printStatementFactory(println),
             fun (): String {
                 return "2022-02-24"
@@ -56,7 +55,7 @@ class TestBankAccount {
     fun `should print many statements with a deposit after many deposits are done`() {
 
         val account: Account = BankAccount(
-            InMemoryTransactionRepository(),
+            Transactions(),
             printStatementFactory(println),
             fun (): String {
                 return "2022-02-24"

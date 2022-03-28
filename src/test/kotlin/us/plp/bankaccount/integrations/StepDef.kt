@@ -8,7 +8,6 @@ import io.mockk.spyk
 import io.mockk.verify
 import us.plp.*
 import us.plp.bankaccount.infrastructure.Console
-import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
 import us.plp.bankaccount.infrastructure.printStatementFactory
 import us.plp.bankaccount.model.Account
 import us.plp.bankaccount.unit.PRINTER_HEADER
@@ -31,7 +30,7 @@ class StepDef {
     @Given("I have an empty account")
     fun i_have_an_empty_account() {
         account = BankAccount(
-            InMemoryTransactionRepository(),
+            Transactions(),
             printStatementFactory(println),
             today
         )

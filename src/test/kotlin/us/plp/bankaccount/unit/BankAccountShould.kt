@@ -12,14 +12,14 @@ import us.plp.*
 
 class BankAccountShould {
 
-    private val transactionRepository = mockk<TransactionRepository>()
+    private val transactions = mockk<Transactions>()
     private val printStatement = spyk<StatementPrinter>()
     private val today = mockk<Today>()
-    private var account: BankAccount = BankAccount(transactionRepository, printStatement, today)
+    private var account: BankAccount = BankAccount(transactions, printStatement, today)
 
     @BeforeEach
     fun beforeEach() {
-        account = BankAccount(transactionRepository, printStatement, today)
+        account = BankAccount(transactions, printStatement, today)
     }
 
     @Test
@@ -28,7 +28,7 @@ class BankAccountShould {
         account.printStatement()
 
         //Then
-        verify { printStatement(transactionRepository) }
+        verify { printStatement(transactions) }
     }
 
     @ParameterizedTest
@@ -39,26 +39,26 @@ class BankAccountShould {
     fun `should place a deposit`(amountToDeposit: Int) {
         //Given
         every { today() } returns "2022-02-24"
-        every { transactionRepository.add(any()) } returns Unit
+        every { transactions.add(any()) } returns Unit
 
         //When
         account.deposit(amountToDeposit)
 
         //Then
-        verify { transactionRepository.add(Deposit("2022-02-24", amountToDeposit)) }
+        verify { transactions.add(Deposit("2022-02-24", amountToDeposit)) }
     }
 
     @Test
     fun `should be able to withdrawal an amount from an account`() {
         //Given
         every { today() } returns "2022-02-25"
-        every { transactionRepository.add(any()) } returns Unit
+        every { transactions.add(any()) } returns Unit
 
         //When
         account.withdrawal(1)
 
         //Then
-        verify { transactionRepository.add(Withdrawal("2022-02-25", 1)) }
+        verify { transactions.add(Withdrawal("2022-02-25", 1)) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {
@@ -69,6 +69,6 @@ class BankAccountShould {
         account.deposit(0)
 
         //Then
-        verify { printStatement(transactionRepository) }
+        verify { printStatement(transactions) }
     }
 }

@@ -4,9 +4,8 @@ import io.mockk.*
 import org.junit.jupiter.api.Test
 import us.plp.Deposit
 import us.plp.StatementPrinter
-import us.plp.TransactionRepository
+import us.plp.Transactions
 import us.plp.bankaccount.infrastructure.Console
-import us.plp.bankaccount.infrastructure.InMemoryTransactionRepository
 import us.plp.bankaccount.infrastructure.printStatementFactory
 
 const val PRINTER_HEADER: String = "DATE       | AMOUNT  | BALANCE";
@@ -24,7 +23,7 @@ class PrintStatementShould {
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
 
-        val transactionRepository = mockk<InMemoryTransactionRepository>(relaxed=true)
+        val transactionRepository = mockk<Transactions>(relaxed=true)
 
         printStatement(transactionRepository)
 
@@ -37,11 +36,11 @@ class PrintStatementShould {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
-        val transactionRepository: TransactionRepository = InMemoryTransactionRepository()
+        val transactions: Transactions = Transactions()
 
-        transactionRepository.add(Deposit("2022-02-24", 10000))
+        transactions.add(Deposit("2022-02-24", 10000))
 
-        printStatement(transactionRepository)
+        printStatement(transactions)
 
         //Then
         verify {

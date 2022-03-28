@@ -2,7 +2,7 @@ package us.plp
 
 import us.plp.bankaccount.model.Account
 
-typealias StatementPrinter = (TransactionRepository) -> Unit
+typealias StatementPrinter = (Transactions) -> Unit
 
 typealias Today = () -> String
 
@@ -22,25 +22,35 @@ abstract class Transaction(open val date: String, open val amount: Int) {
     abstract fun applyTransaction(balance: Int): Int
 }
 
-interface TransactionRepository {
-    fun add(transaction: Transaction)
-    fun forEach(transactionConsumer: (Transaction, Int) -> Unit)
+class Transactions(val transactions: MutableList<Transaction> = mutableListOf()) {
+
+    fun add(transaction: Transaction) {
+        transactions.add(transaction)
+    }
+
+    fun forEach(transactionConsumer: (Transaction, Int) -> Unit) {
+        var balance = 0
+        transactions.forEach {
+            balance = it.applyTransaction(balance)
+            transactionConsumer(it, balance)
+        }
+    }
 }
 
 class BankAccount(
-    val transactionRepository: TransactionRepository,
+    val transactions: Transactions,
     val printStatement: StatementPrinter, val today: Today) : Account {
 
     override fun deposit(amount: Int) {
-        transactionRepository.add(Deposit(today(), amount));
+        transactions.add(Deposit(today(), amount));
     }
 
     override fun withdrawal(amount: Int) {
-        transactionRepository.add(Withdrawal(today(), amount))
+        transactions.add(Withdrawal(today(), amount))
     }
 
     override fun printStatement() {
-        printStatement(transactionRepository)
+        printStatement(transactions)
     }
 
 }
