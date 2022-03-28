@@ -1,5 +1,6 @@
 package us.plp.unit
 
+import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import us.plp.*
@@ -11,18 +12,26 @@ class TransactionRepositoryShould {
     fun `add a deposit`(
     ) {
         val deposit = Deposit("23/03/2022", 100)
-        val transactionRepository = InMemoryTransactionRepository()
+        val mutableList = mockk<MutableList<Transaction>>()
+        val transactionRepository = InMemoryTransactionRepository(mutableList)
+        every { mutableList.add(deposit) } returns true
+
         transactionRepository.add(deposit)
-        assertThat(transactionRepository.getAll()).isEqualTo(listOf(deposit))
+
+        verify { mutableList.add(deposit) }
     }
 
     @Test
     fun `add a withdrawal`(
     ) {
         val withdrawal = Withdrawal("24/03/2022", 200)
-        val transactionRepository = InMemoryTransactionRepository()
+        val mutableList = mockk<MutableList<Transaction>>()
+        val transactionRepository = InMemoryTransactionRepository(mutableList)
+        every { mutableList.add(withdrawal) } returns true
+
         transactionRepository.add(withdrawal)
-        assertThat(transactionRepository.getAll()).isEqualTo(listOf(withdrawal))
+
+        verify { mutableList.add(withdrawal) }
     }
 
     @Test
@@ -30,9 +39,7 @@ class TransactionRepositoryShould {
     ) {
         val deposit = Deposit("23/03/2022", 100)
         val withdrawal = Withdrawal("24/03/2022", 200)
-        val transactionRepository = InMemoryTransactionRepository()
-        transactionRepository.add(deposit)
-        transactionRepository.add(withdrawal)
+        val transactionRepository = InMemoryTransactionRepository(mutableListOf(deposit, withdrawal))
         transactionRepository.forEach {
             assertThat(it).isIn(listOf(deposit, withdrawal))
         }

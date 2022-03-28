@@ -2,16 +2,10 @@ package us.plp.infrastructure
 import us.plp.Transaction
 import us.plp.TransactionRepository
 
-class InMemoryTransactionRepository : TransactionRepository {
-
-    private val transactions = mutableListOf<Transaction>()
+class InMemoryTransactionRepository(val transactions: MutableList<Transaction> = mutableListOf()) : TransactionRepository {
 
     override fun add(transaction: Transaction) {
         transactions.add(transaction)
-    }
-
-    override fun getAll(): List<Transaction> {
-        return transactions
     }
 
     override fun forEach(transactionConsumer: (Transaction) -> Unit) {
