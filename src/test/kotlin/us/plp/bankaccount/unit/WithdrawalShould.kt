@@ -3,7 +3,7 @@ package us.plp.bankaccount.unit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import us.plp.*
+import us.plp.bankaccount.entities.Withdrawal
 
 class WithdrawalShould {
 

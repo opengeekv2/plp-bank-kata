@@ -8,7 +8,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import us.plp.*
+import us.plp.bankaccount.entities.Deposit
+import us.plp.bankaccount.entities.Transactions
+import us.plp.bankaccount.entities.Withdrawal
+import us.plp.bankaccount.usecases.BankAccount
+import us.plp.bankaccount.usecases.StatementPrinter
+import us.plp.bankaccount.usecases.Today
 
 class BankAccountShould {
 

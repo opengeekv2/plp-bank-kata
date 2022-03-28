@@ -1,4 +1,4 @@
-package us.plp.bankaccount.model
+package us.plp.bankaccount.usecases
 
 interface Account {
     fun deposit(amount: Int): Unit

@@ -1,6 +1,6 @@
 package us.plp.bankaccount.infrastructure
 
-import us.plp.Today
+import us.plp.bankaccount.usecases.Today
 
 val todayFactory: () -> Today = fun (): Today {
     return fun (): String {
