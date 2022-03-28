@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -37,10 +36,10 @@ class BankAccountShould {
         "1",
         "10000",
     )
-
     fun `should place a deposit`(amountToDeposit: Int) {
         //Given
         every { today() } returns "2022-02-24"
+        every { transactionRepository.add(any()) } returns Unit
 
         //When
         account.deposit(amountToDeposit)
@@ -49,47 +48,17 @@ class BankAccountShould {
         verify { transactionRepository.add(Deposit("2022-02-24", amountToDeposit)) }
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        "2022-02-24, 10000",
-        "2022-02-24, 1",
-    )
-    fun `should print the first deposit after the deposit has been done`(date: String, amountToDeposit: Int) {
-        //Given
-        every { today() } returns "2022-02-24"
-
-        //When
-        account.deposit(amountToDeposit)
-        account.printStatement()
-
-        //Then
-        verify { printStatement(transactionRepository) }
-    }
-
-    @Test
-    fun `should print the correct date whenever a deposit is done`() {
-        //Given
-        every { today() } returns "2022-02-25"
-
-        //When
-        account.deposit(1)
-        account.printStatement()
-
-        //Then
-        verify { printStatement(transactionRepository) }
-    }
-
     @Test
     fun `should be able to withdrawal an amount from an account`() {
         //Given
         every { today() } returns "2022-02-25"
+        every { transactionRepository.add(any()) } returns Unit
 
         //When
         account.withdrawal(1)
-        account.printStatement()
 
         //Then
-        verify { printStatement(transactionRepository) }
+        verify { transactionRepository.add(Withdrawal("2022-02-25", 1)) }
     }
 
     fun `should throw an exception when the deposit is less than 1`() {

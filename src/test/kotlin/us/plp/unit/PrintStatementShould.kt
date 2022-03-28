@@ -1,10 +1,13 @@
 package us.plp.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import us.plp.Deposit
 import us.plp.StatementPrinter
+import us.plp.Transaction
 import us.plp.infrastructure.Console
 import us.plp.infrastructure.InMemoryTransactionRepository
 import us.plp.infrastructure.printStatementFactory
@@ -23,7 +26,11 @@ class PrintStatementShould {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
-        printStatement(InMemoryTransactionRepository())
+        val transactionRepository = mockk<InMemoryTransactionRepository>()
+
+        every { transactionRepository.getAll() } returns emptyList()
+
+        printStatement(transactionRepository)
 
         //Then
         verify { println(PRINTER_HEADER) }
@@ -34,8 +41,10 @@ class PrintStatementShould {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
-        val transactionRepository = InMemoryTransactionRepository()
-        transactionRepository.add(Deposit("2022-02-24", 10000))
+        val transactionRepository = mockk<InMemoryTransactionRepository>()
+
+        every { transactionRepository.getAll() } returns listOf<Transaction>(Deposit("2022-02-24", 10000))
+
         printStatement(transactionRepository)
 
         //Then
