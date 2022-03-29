@@ -25,6 +25,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.2.3")
+    testImplementation ("com.github.stefanbirkner:system-lambda:1.2.0")
 }
 
 tasks.test {
