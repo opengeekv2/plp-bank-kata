@@ -20,4 +20,16 @@ class WithdrawalShould {
         balance = withdrawal.applyTransaction(balance)
         assertThat(balance).isEqualTo(finalBalance)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "100, -100",
+        "200, -200",
+    )
+    fun `return the value`(
+        amount: Int, value: Int
+    ) {
+        val withdrawal = Withdrawal("23/03/2022", amount)
+        assertThat(withdrawal.value()).isEqualTo(value)
+    }
 }

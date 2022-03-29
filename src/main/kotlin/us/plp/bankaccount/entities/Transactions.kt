@@ -1,19 +1,27 @@
 package us.plp.bankaccount.entities
 
 data class Deposit(override val date: String, override val amount: Int): Transaction(date, amount) {
-    override fun applyTransaction(balance: Int): Int {
-        return balance + amount
+
+    override fun value(): Int {
+        return amount
     }
+
 }
 
 data class Withdrawal(override val date: String, override val amount: Int): Transaction(date, amount) {
-    override fun applyTransaction(balance: Int): Int {
-        return balance - amount
+
+    override fun value(): Int {
+        return -amount
     }
 }
 
 abstract class Transaction(open val date: String, open val amount: Int) {
-    abstract fun applyTransaction(balance: Int): Int
+
+    fun applyTransaction(balance: Int): Int {
+        return balance + value()
+    }
+
+    abstract fun value(): Int
 }
 
 class Transactions(val transactions: MutableList<Transaction> = mutableListOf()) {
@@ -26,7 +34,7 @@ class Transactions(val transactions: MutableList<Transaction> = mutableListOf())
         var balance = 0
         transactions.forEach {
             balance = it.applyTransaction(balance)
-            transactionConsumer(StatementLine(it.date, it.amount, balance))
+            transactionConsumer(StatementLine(it.date, it.value(), balance))
         }
     }
 }

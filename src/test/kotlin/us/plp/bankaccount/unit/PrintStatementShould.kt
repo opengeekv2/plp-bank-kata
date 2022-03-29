@@ -2,10 +2,7 @@ package us.plp.bankaccount.unit
 
 import io.mockk.*
 import org.junit.jupiter.api.Test
-import us.plp.bankaccount.entities.Console
-import us.plp.bankaccount.entities.printStatementFactory
-import us.plp.bankaccount.entities.Deposit
-import us.plp.bankaccount.entities.Transactions
+import us.plp.bankaccount.entities.*
 import us.plp.bankaccount.usecases.StatementPrinter
 
 const val PRINTER_HEADER: String = "DATE       | AMOUNT  | BALANCE";
@@ -32,7 +29,7 @@ class PrintStatementShould {
     }
 
     @Test
-    fun `should print an single statement for an account with some operations`() {
+    fun `should print an single statement for an account with a deposit`() {
         //Given
         val println = spyk<Console>()
         val printStatement: StatementPrinter = printStatementFactory(println)
@@ -46,6 +43,26 @@ class PrintStatementShould {
         verify {
             println(PRINTER_HEADER)
             println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 10000")})
+        }
+    }
+
+    @Test
+    fun `should print an two statement for an account with some a deposit and a withdrawal`() {
+        //Given
+        val println = spyk<Console>()
+        val printStatement: StatementPrinter = printStatementFactory(println)
+        val transactions: Transactions = Transactions()
+
+        transactions.add(Deposit("2022-02-24", 10000))
+        transactions.add(Withdrawal("2022-02-24", 5000))
+
+        printStatement(transactions)
+
+        //Then
+        verify {
+            println(PRINTER_HEADER)
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | 10000 | 10000") } )
+            println(match { param -> compareWithOutSpacing(param, "2022-02-24 | -5000 | 5000") } )
         }
     }
 }

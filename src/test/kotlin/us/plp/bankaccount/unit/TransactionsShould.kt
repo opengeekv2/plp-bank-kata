@@ -43,7 +43,7 @@ class TransactionsShould {
         val withdrawal = Withdrawal("24/03/2022", 200)
         val transactionRepository = Transactions(mutableListOf(deposit, withdrawal))
         transactionRepository.forEach{
-            assertThat(it.amount).isIn(listOf(deposit.amount, withdrawal.amount))
+            assertThat(it.amount*it.amount).isIn(listOf(deposit.amount*deposit.amount, withdrawal.amount*withdrawal.amount))
             assertThat(it.date).isIn(listOf(deposit.date, withdrawal.date))
             assertThat(it.balance).isIn(listOf(100, -100))
         }

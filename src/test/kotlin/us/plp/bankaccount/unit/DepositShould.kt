@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import us.plp.bankaccount.entities.Deposit
+import us.plp.bankaccount.entities.Withdrawal
 
 class DepositShould {
 
@@ -19,5 +20,17 @@ class DepositShould {
         var balance = initialBalance
         balance = deposit.applyTransaction(balance)
         assertThat(balance).isEqualTo(finalBalance)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "100, 100",
+        "200, 200",
+    )
+    fun `return the value`(
+        amount: Int, value: Int
+    ) {
+        val deposit = Deposit("23/03/2022", amount)
+        assertThat(deposit.value()).isEqualTo(value)
     }
 }

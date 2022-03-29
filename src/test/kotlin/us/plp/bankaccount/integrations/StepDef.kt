@@ -60,7 +60,6 @@ class StepDef {
     }
 
     @Then("I see an account statement for {string} with a deposit of {string} and a balance of {string}")
-    @Then("I see an account statement for {string} with a withdrawal of {string} and a balance of {string}")
     fun i_see_an_account_statement_for_with_a_deposit_of_and_a_balance_of(
         date: String,
         amount: String,
@@ -68,6 +67,17 @@ class StepDef {
     ) {
         verify {
             println(match { param -> compareWithOutSpacing(param, "$date | $amount | $balance")})
+        }
+    }
+
+    @Then("I see an account statement for {string} with a withdrawal of {string} and a balance of {string}")
+    fun i_see_an_account_statement_for_with_a_withdrawal_of_and_a_balance_of(
+        date: String,
+        amount: String,
+        balance: String
+    ) {
+        verify {
+            println(match { param -> compareWithOutSpacing(param, "$date | -$amount | $balance")})
         }
     }
 
