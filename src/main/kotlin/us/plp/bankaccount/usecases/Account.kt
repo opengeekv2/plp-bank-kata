@@ -1,9 +1,9 @@
 package us.plp.bankaccount.usecases
 
 interface Account {
-    fun deposit(amount: Int): Unit
+    fun deposit(amount: Int)
 
-    fun withdrawal(amount: Int): Unit
+    fun withdrawal(amount: Int)
 
-    fun printStatement(): Unit
+    fun printStatement()
 }
