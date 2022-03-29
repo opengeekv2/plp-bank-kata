@@ -1,9 +1,12 @@
 package us.plp.bankaccount.infrastructure
 
 import us.plp.bankaccount.usecases.Today
+import java.time.Clock
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-val todayFactory: () -> Today = fun (): Today {
+fun todayFactory(clock: Clock = Clock.systemDefaultZone()): Today {
     return fun (): String {
-        TODO("Not yet implemented")
+        return LocalDate.now(clock).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     }
 }
