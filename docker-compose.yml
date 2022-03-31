@@ -3,7 +3,8 @@ volumes:
   home:
 services:
   plp-bank-kata:
-    entrypoint: "gradle test"
+    ports:
+      - '8080:8080'
     user: "${UID}"
     build:
       context: ./docker

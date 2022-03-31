@@ -24,7 +24,9 @@ abstract class Transaction(open val date: String, open val amount: Int) {
     abstract fun value(): Int
 }
 
-class Transactions(val transactions: MutableList<Transaction> = mutableListOf()) {
+data class StatementLine(val date: String, val amount: Int, val balance: Int)
+
+class Transactions(private val transactions: MutableList<Transaction> = mutableListOf()) {
 
     fun add(transaction: Transaction) {
         transactions.add(transaction)

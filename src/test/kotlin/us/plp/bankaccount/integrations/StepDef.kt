@@ -6,9 +6,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
-import us.plp.bankaccount.entities.Console
-import us.plp.bankaccount.entities.printStatementFactory
 import us.plp.bankaccount.entities.Transactions
+import us.plp.bankaccount.infrastructure.Console
+import us.plp.bankaccount.infrastructure.printStatementFactory
 import us.plp.bankaccount.usecases.Account
 import us.plp.bankaccount.unit.PRINTER_HEADER
 import us.plp.bankaccount.unit.SPACING

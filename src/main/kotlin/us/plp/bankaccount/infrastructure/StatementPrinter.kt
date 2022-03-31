@@ -1,12 +1,11 @@
-package us.plp.bankaccount.entities
+package us.plp.bankaccount.infrastructure
 
+import us.plp.bankaccount.entities.Transactions
 import us.plp.bankaccount.usecases.StatementPrinter
 
 typealias Console = (String) -> Unit
 
-data class StatementLine(val date: String, val amount: Int, val balance: Int)
-
-val printStatementFactory: (Console) -> StatementPrinter = fun (println: Console): StatementPrinter {
+fun printStatementFactory(println: Console): StatementPrinter {
 
     return fun (transactions: Transactions) {
         println("DATE       | AMOUNT  | BALANCE")

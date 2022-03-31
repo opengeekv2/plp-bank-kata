@@ -5,8 +5,11 @@ val cucumberRuntime: Configuration by configurations.creating {
 }
 
 plugins {
+    id("org.springframework.boot") version "2.4.4"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.10"
-    application
+    kotlin("plugin.spring") version "1.6.10"
+    java
 }
 
 group = "us.plp"
@@ -17,8 +20,14 @@ repositories {
 }
 
 dependencies {
-    implementation("io.cucumber:cucumber-java:7.2.3")
-    implementation("io.cucumber:cucumber-junit:7.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.cucumber:cucumber-java:7.2.3")
+    testImplementation("io.cucumber:cucumber-junit:7.2.3")
     testImplementation("org.assertj:assertj-core:3.22.0")
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.12.2")
@@ -34,7 +43,10 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
+    }
 }
 
 task("cucumber") {
@@ -48,24 +60,4 @@ task("cucumber") {
             args = listOf("--plugin", "pretty", "--glue", "us.plp.bankaccount.integrations", "src/test/resources/cucumber/features")
         }
     }
-}
-
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    // Otherwise you'll get a "No main manifest attribute" error
-    manifest {
-        attributes["Main-Class"] = "MainKt"
-    }
-
-    // To add all of the dependencies otherwise a "NoClassDefFoundError" error
-    from(sourceSets.main.get().output)
-
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
-}
-
-application {
-    mainClass.set("MainKt")
 }

@@ -1,7 +1,7 @@
 package us.plp.bankaccount.infrastructure
 
-import us.plp.bankaccount.entities.Console
-
-val println: Console = fun (string: String) {
-    kotlin.io.println(string)
+fun consoleFactory(): Console {
+    return fun (string: String) {
+        println(string)
+    }
 }

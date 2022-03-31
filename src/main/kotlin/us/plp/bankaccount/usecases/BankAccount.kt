@@ -9,7 +9,7 @@ typealias StatementPrinter = (Transactions) -> Unit
 typealias Today = () -> String
 
 class BankAccount(
-    val transactions: Transactions,
+    private val transactions: Transactions,
     val printStatement: StatementPrinter, val today: Today) : Account {
 
     override fun deposit(amount: Int) {
